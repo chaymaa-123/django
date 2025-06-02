@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> LuxeryDrive </title>
+    <link rel="stylesheet" href="static/front/style.css">
+
+  
+     
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional: Custom CSS -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="{% static 'front/style.css' %}">
+    <style>
+      /* Style personnalisé pour les cartes LuxeryDrive */
+      .luxury-card-container {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          gap: 20px;
+          overflow-x: auto;
+          padding: 10px 0;
+          margin-top: 50px;
+      }
+      
+      .luxury-card {
+          width: 400px;
+          min-width: 200px;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s, box-shadow 0.3s;
+          background-color: white;
+          margin-left: 10px;
+          margin-Right:10px;
+      
+      }
+      
+      .luxury-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+      
+      .luxury-card-img-container {
+          height: 180px;
+          overflow: hidden;
+      }
+      
+      .luxury-card .card-img-top {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s;
+      }
+      
+      .luxury-card:hover .card-img-top {
+          transform: scale(1.05);
+      }
+      
+      .luxury-card .card-body {
+          padding: 20px;
+      }
+      
+      .luxury-card .card-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 12px;
+          border-bottom: 2px solid #f2a900;
+          padding-bottom: 8px;
+      }
+      
+      .luxury-card .card-text {
+          color: #555;
+          font-size: 14px;
+          line-height: 1.5;
+          height: 150px;
+          overflow: hidden;
+      }
+      
+      .luxury-card .btn-primary {
+          display: inline-block;
+          background-color: rgb(12, 12, 39); /* Luxury gold color */
+          color: white;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-weight: 600;
+          transition: background-color 0.3s;
+          border: none;
+          margin-top: 15px;
+          text-align: center;
+          width: 100%;
+      }
+      
+      .luxury-card .btn-primary:hover {
+          background-color:  rgb(52, 52, 63);
+      }
+    </style>
+
+  </head>
+<body  class="color">
+
+
+
+  <div style="margin-top: 80px;">
+
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-top bg" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/home">
+          <img src="{% static 'images/logo.png' %}" >
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Contactus">Réservation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Aboutus">A propos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Nos Voitures
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/VoitureLuxe">Voiture de Luxe</a></li>
+                <li><a class="dropdown-item" href="/VoitureNrml">Voiture Normale</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/help">Help</a>
+            </li>
+          </ul>
+        
+          <!-- ✅ bouton "se déconnecter" aligné à droite -->
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link fw-bold"
+                 href="/"
+                 onclick="return confirm('Es-tu sûr de vouloir te déconnecter ?');">
+                 Se déconnecter
+              </a>
+            </li>
+          </ul>
+          
+        </div>
+        
+      </div>
+    </nav>
+    <!-- BREAKING NEWS + bande promo défilante -->
+<style>
+  .breaking-news {
+    background-color: #c62828;
+    color: white;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .breaking-news span {
+    margin-right: 15px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .news-ticker {
+    background-color: #fff8e1;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    color: #333;
+    padding: 12px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .ticker-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 18s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .ticker-text span {
+    margin-right: 60px;
+    font-size: 1rem;
+  }
+</style>
+{%block content%}
+<div class="breaking-news">
+  <span>🚨</span> BREAKING NEWS 1 : Promo sur la 1ère commande !
+</div>
+
+<div class="news-ticker">
+  <div class="ticker-text">
+    <span>🚗 20% de réduction sur les SUV ce week-end !</span>
+    <span>🛠️ Révision gratuite pour toute location de plus de 7 jours.</span>
+    <span>🎉 Citadine à partir de 19€/jour cette semaine !</span>
+    <span>🔧 Assurance tous risques offerte pour les nouveaux clients !</span>
+  </div>
+</div>
+
+  </header>
+
+
+
+ 
+<!-- start slider -->
+<div id="carouselExampleDark" class=" carousel carousel-dark slide  ">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="6" aria-label="Slide 7"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="7" aria-label="Slide 8"></button> 
+  </div>
+
+<!-- start carousel -->
+  <div class="carousel-inner">
+
+  
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="{% static 'images/carentel.png' %}" class="d-block w-100" alt="Location voiture de luxe">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>LuxeryDrive for rental luxury cars<br>LuxeryDrive pour la location de voitures de luxe</h5>
+      </div>
+    </div>
+    
+
+
+
+    <div class="carousel-item" data-bs-interval="1000">
+      <img src="{%static 'images/bentleypic.png'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B">Promotion of the month -30% on ur First Order  <br> La Promo du Mois-30% pour Votre Premiére Commande </h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="{%static 'images/priceof1.png'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B">New  Promotion get 5 days of price of 3 days <br> Nouvelle Promo prend une pour 5 jours pour le prix de 3jours</h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="{%static 'images/newarrivals.png'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B">New Arrivals <br> Nos Nouveautés</h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="4000">
+      <img src="{%static 'images/our cars.png'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B"> Our Brands new cars for location <br> Nos Nouveaux Models pour la location</h5>
+      </div>
+    </div>
+
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{%static 'images/Oldschool cars.jpg'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B"> Our Oldschool Luxery cars <br> Nos Anciens luxe Voitures </h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="6000">
+      <img src="{%static 'images/for Womens.jpeg'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B">Cars just for Our  Womens  <br>  Des voitures just pour nos femmes </h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="7000">
+      <img src="{%static 'images/shop now.png'%}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="B">SHOP NOW !  We are waiting for you <br> Commande Maintenant ! on attend</h5>
+      </div>
+    </div>
+
+
+    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<!-- end slider -->
+
+
+<!--start card -->
+<div class="luxury-card-container">
+
+<div class="luxury-card">
+  <div class="luxury-card-img-container">
+  
+    <img src="{% static 'images/entreprise.jpg' %}" class="card-img-top" alt="...">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"> About Us </h5>
+    <p class="card-text">  LUXERYDRIVE has been a trusted name in the luxury car rental market for 30 years! We offer premium vehicles with complete privacy and guarantees, all at very affordable prices. Experience the best in luxury car rentals with us, where quality and customer satisfaction are our top priorities. </p>
+    <a href="Aboutus" class="btn btn-primary">Learn More</a>
+  </div>
+</div>  
+
+<div class="luxury-card">
+  <div class="luxury-card-img-container">
+    <img src="{% static '/images/7j sur 7.png'%}" class="card-img-top" alt="...">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">LuxeryDrive Available 7 Days a Week</h5>
+    <p class="card-text">Welcome to LuxeryDrive! We are open 7 days a week to serve you better. Take advantage of our constant availability and guaranteed vehicles to meet all your rental needs. Visit us anytime, we are always here for you!</p>
+    <a href="/Aboutus" class="btn btn-primary">Learn More</a>
+  </div>
+</div>  
+
+
+<div class="luxury-card">
+  <div class="luxury-card-img-container">
+   
+    <img src="{% static 'images/carte.png'  %}" class="card-img-top" alt="...">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">30 Years of Excellence</h5>
+    <p class="card-text">LUXERYDRIVE has been a trusted name in the luxury car rental market for 30 years! We offer premium vehicles with complete privacy and guarantees, all at very affordable prices. Experience the best in luxury car rentals with us.</p>
+    <a href="Aboutus" class="btn btn-primary">Learn More</a>
+  </div>
+</div>  
+
+
+<div class="luxury-card">
+  <div class="luxury-card-img-container">
+    <img src="{% static 'images/catalogue.jpeg' %}"  class="card-img-top" alt="...">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Top-Quality Fleet</h5>
+    <p class="card-text">At LUXERYDRIVE, we pride ourselves on offering top-quality, brand new cars. Our rental contracts are straightforward and designed for your convenience, ensuring a quick and easy process.</p>
+    <a href="Aboutus" class="btn btn-primary">Learn More</a>
+  </div>
+</div>  
+
+</div>
+<!--end card-->
+{%endblock%}
+
+<!-- start Footer -->
+   <!-- <footer class="bg-dark text-white text-center py-3 mt-auto">-->
+<footer class="text-white text-center py-3 mt-auto A">
+<!-- <footer class="text-center text-lg-start bg-body-tertiary   text-muted A" style="position: fixed; width: 100%; bottom: 0;"> -->
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="https://web.facebook.com/" class="me-4 text-reset" > 
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+      <a href="https://x.com/" class="me-4 text-reset">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+      <a href="https://www.google.com/" class="me-4 text-reset">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="https://www.instagram.com/" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/feed/" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a "href=https://github.com/" class="me-4 text-reset">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>LuxeryDrive
+          </h6>
+          <p>
+            L'excellence à chaque virage. Louez les plus grandes marques automobiles et vivez l'élégance sur quatre roues.
+             
+            <br> <br> <br>
+ 
+           Excellence at every turn. Rent the world's finest cars and experience luxury on the road. 
+
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fa-solid fa-car"></i>  Brands
+          </h6>
+          <li>
+            Lamborghini
+          </li> <br>
+          <li>
+            Bugatti
+          </li> <br>
+
+         <li>
+            Ferrari
+          </li>  <br>
+         
+          <li>
+            Rolls Royce
+          </li> <br>
+
+          <li>
+            Aston Martin
+          </li> <br>
+
+
+          <li>
+            Bentley
+          </li> <br>
+
+          <li>
+            Maserati
+          </li>  <br>
+
+
+         <li>
+          porsche
+         </li>  <br>
+
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fa-solid fa-link"></i>
+            Useful links
+          </h6>
+          <p>
+            <a href="#!" class="text-reset"> <i class="fa-solid fa-money-bill"></i> Pricing</a>
+          </p>
+          <br> 
+
+          <p>
+            <a href="#!" class="text-reset"> <i class="fa-solid fa-gears"></i> Settings</a>
+          </p>
+          <br>
+
+          <p>
+            <a href="#!" class="text-reset"> <i class="fa-solid fa-sort"></i> Orders</a>
+          </p>
+          <br>
+
+          <p>
+            <a href="#!" class="text-reset"> <i class="fa-solid fa-question"></i> Help</a>
+          </p>
+          <br>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links --> 
+          <h6 class="text-uppercase fw-bold mb-4"> <i class="fa-solid fa-address-book"> </i> Contact</h6>
+         
+          <p><i class="fas fa-home me-3"> </i> Maarif, 10012, Morocco Casablanca</p>
+        
+            <br>
+
+            <i class="fas fa-envelope me-3"></i>
+            LuxeryDrive@gmail.com
+            <br>
+            <br>
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 212 577 987 214 7</p>
+          <br>
+          <p><i class="fas fa-print me-3"></i> + 212 234 567 789 1</p>
+          <br>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2025 Copyright:
+    <a class="text-reset fw-bold" href="#">Our WebSite</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- end Footer -->
+
+</body>
+</html>

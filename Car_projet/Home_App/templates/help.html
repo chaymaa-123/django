@@ -1,0 +1,197 @@
+{% extends "main.html" %} 
+{% load static %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contactez-nous</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0a1a2f; /* bleu marine foncé */
+      color: #f5f5dc; /* beige clair */
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 50px auto;
+
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-info {
+      flex: 1;
+      background-color: #0a1a2f;
+      color: #f5f5dc;
+      padding: 40px;
+    }
+
+    .contact-info h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .contact-info p {
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .info-block {
+      margin-bottom: 20px;
+    }
+
+    .info-block i {
+      margin-right: 10px;
+    }
+
+    .contact-form {
+      flex: 2;
+      padding: 40px;
+      background-color: #f5f5dc;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-control {
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+      color: #0a1a2f;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      font-size: 14px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .submit-btn {
+      background-color: #0a1a2f;
+      color: #f5f5dc;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #122c4a;
+    }
+
+    /* Icons */
+    .info-icon {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .info-icon i {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+  </style>
+  <!-- Icônes Font Awesome -->
+  <script src="https://kit.fontawesome.com/a2e8c27b3a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="contact-info">
+      <h2>INFORMATIONS DE CONTACT</h2>
+      <p>Remplissez le formulaire et notre équipe vous répondra dans les 24 heures.</p>
+
+      <div class="info-icon">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong>Bureaux</strong><br />
+          N° 10, Rue 13, Bd Al Qods,<br />Casablanca 20460
+        </div>
+      </div>
+
+      <div class="info-icon">
+        <i class="fab fa-whatsapp"></i>
+        <div>
+          <strong>Pour des réservations rapides</strong><br />
+          +212 656035555
+        </div>
+      </div>
+
+      <div class="info-icon">
+        <i class="fas fa-at"></i>
+        <div>
+          <strong>Email</strong><br />
+          <a href="https://mail.google.com/mail/u/0/?pli=1#inbox" style="color: #f5f5dc; text-decoration: underline;">Luxerycar@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <form>
+        <div class="form-group">
+          <div class="form-control">
+            <label for="prenom">PRÉNOM</label>
+            <input type="text" id="prenom" placeholder="Entrez votre nom.">
+          </div>
+          <div class="form-control">
+            <label for="nom">VOTRE NOM</label>
+            <input type="text" id="nom" placeholder="Entrez votre nom.">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-control">
+            <label for="email">EMAIL</label>
+            <input type="email" id="email" placeholder="Entrez votre adresse e-mail.">
+          </div>
+          <div class="form-control">
+            <label for="objet">OBJET</label>
+            <input type="text" id="objet" placeholder="Indiquez votre objet.">
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="message">MESSAGE</label>
+          <textarea id="message" placeholder="Entrez votre message."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">CONTACTEZ-NOUS</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+{%endblock%}

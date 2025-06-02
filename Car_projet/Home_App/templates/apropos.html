@@ -1,0 +1,295 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>AirCar - Nos véhicules</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .carousel-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 50px 0 30px;
+      color: #f5f5f5;
+    }
+
+    .car-card {
+      padding: 10px;
+      text-align: center;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .car-card:hover {
+      transform: scale(1.05);
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .car-card p {
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+    }
+
+    .why-us-icon {
+      font-size: 3rem;
+      color: #ff4d4d;
+    }
+
+    .why-us-title {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #fff;
+    }
+
+    .container .row p {
+      color: #ccc;
+    }
+
+    .text-center h2 {
+      color: #f8f9fa;
+    }
+
+    /* Nouveau style pour la section "À savoir avant de louer" */
+    .advice-container {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      margin-top: 40px;
+    }
+
+    .advice-container h2 {
+      color: #f5f5f5;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .advice-container h3 {
+      color: #f5f5f5;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .advice-container p {
+      color: #ccc;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: justify;
+    }
+
+    .advice-container .btn {
+      margin-top: 30px;
+      width: 200px;
+      float: right;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- SECTION VEHICULES -->
+<div class="container">
+  <h2 class="carousel-title">Nos véhicules</h2>
+  <div id="vehiculesCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <!-- 1ère slide -->    
+  <!-- 1ère slide -->    
+<div class="carousel-item active">    
+  <div class="row justify-content-center text-center">
+    {% for car in cars %} 
+      {% if car.type == 1 and car.position == 1 %}
+        <div class="col-md-2 car-card">
+          <img src="{% static 'images/' %}{{ car.image_filename }}" alt="Car1">
+          <p>{{ car.voiture }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+      <!-- 2e slide -->
+      <div class="carousel-item">
+        <div class="row justify-content-center text-center">
+          {% for car in cars %} 
+            {% if car.type == 1 and car.position == 2 %}
+              <div class="col-md-2 car-card">
+                <img src="{% static 'images/' %}{{ car.image_filename }}" alt="Car1">
+                <p>{{ car.voiture }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#vehiculesCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#vehiculesCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- 2e carrousel -->
+  <h2 class="carousel-title"> </h2>
+  <div id="vehiculesCarousel2" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <!-- 1ère slide -->
+      <div class="carousel-item active">
+        <div class="row justify-content-center text-center">
+          {% for car in cars %} 
+            {% if car.type == 2 and car.position == 2 %}
+              <div class="col-md-2 car-card">
+                <img src="{% static 'images/' %}{{ car.image_filename }}" alt="Car1">
+                <p>{{ car.voiture }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- 2e slide -->
+      <div class="carousel-item">
+        <div class="row justify-content-center text-center">
+          {% for car in cars %} 
+            {% if car.type == 2 and car.position == 1%}
+              <div class="col-md-2 car-card">
+                <img src="{% static 'images/' %}{{ car.image_filename }}" alt="Car1">
+                <p>{{ car.voiture }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#vehiculesCarousel2" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#vehiculesCarousel2" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</div>
+<br><br><br><br><br><br><br>
+
+<!-- SECTION À SAVOIR AVANT DE LOUER -->
+<div class="container">
+  <div class="advice-container">
+    <h2>À savoir avant de louer une voiture au Maroc</h2>
+    <h3>Aircar vous partage 10 conseils incontournables à suivre pour une meilleure expérience de location de voiture au Maroc.</h3>
+    <h3>Conseil 1 : Penser à réserver tôt !</h3>
+    <p>Réserver tôt permet souvent d’avoir les meilleurs prix, et un plus large choix de catégories de voitures disponibles à la location...</p>
+    <h3>Conseil 2 : Le bon choix d'assurance</h3>
+    <p>Outre l’assurance de responsabilité civile obligatoire incluse dans votre contrat de location, il vous est proposé en sus une assurance complémentaire de « rachat partiel de franchise »...</p>
+    <h3>Conseil 3 : Les extras et la règle de pleine essence!</h3>
+    <p>Les prix des extras comme les sièges pour bébé et enfant, les portes bagages ou les GPS sont à mentionner dans les détails de la location, pour éviter un manque de disponibilité au moment de la prise en charge du véhicule à votre arrivée...</p>
+    <h3>Conseil 4 : Vérifier l’état du véhicule</h3>
+    <p>Avant de quitter l’agence de location, il est important de vérifier l’état du véhicule et de signaler tout dommage ou rayure au personnel de l’agence...</p>   
+    <h3>Conseil 5 : Respecter le code de la route</h3>
+    <p>Le code de la route au Maroc est similaire à celui de nombreux pays, mais il y a quelques différences à prendre en compte...</p> 
+    <h3>Conseil 6 : Connaître les limitations de vitesse</h3>
+    <p>Les limitations de vitesse au Maroc sont de 60 km/h en ville, 100 km/h sur route et 120 km/h sur autoroute...</p>
+    <h3>Conseil 7 : Avoir un permis de conduire valide</h3>
+    <p>Pour louer une voiture au Maroc, vous devez avoir un permis de conduire valide depuis au moins 2 ans...</p>
+    <h3>Conseil 8 : Avoir un âge minimum</h3>
+    <p>La plupart des agences de location de voitures au Maroc exigent que le conducteur ait au moins 21 ans...</p>
+    <h3>Conseil 9 : Connaître les règles de stationnement</h3>
+    <p>Le stationnement peut être difficile dans certaines villes marocaines, il est donc important de connaître les règles de stationnement...</p>
+    <h3>Conseil 10 : Avoir un GPS ou une carte</h3>
+    <p>Il est recommandé d'avoir un GPS ou une carte pour naviguer dans les villes marocaines...</p>
+    <h3>Conseil 11 : Respecter les règles de sécurité</h3>
+    <p>Il est important de respecter les règles de sécurité, notamment en portant la ceinture de sécurité et en évitant d'utiliser votre téléphone portable en conduisant...</p>
+    <h3>Conseil 12 : Connaître les numéros d'urgence</h3>
+    <p>Il est important de connaître les numéros d'urgence au Maroc, notamment le 19 pour la police et le 15 pour les pompiers...</p>
+    <h3>Conseil 13 : Avoir un plan de secours</h3>
+    <p>Il est recommandé d'avoir un plan de secours en cas de panne ou d'accident, notamment en ayant le numéro de l'agence de location et une assurance voyage...</p>
+    <h3>Conseil 14 : Respecter les règles de conduite</h3>
+    <p>Il est important de respecter les règles de conduite, notamment en évitant de conduire sous l'influence de l'alcool ou de drogues...</p>
+    <br><br>
+    <a href="/help" class="btn btn-primary">Besoin d'aide ?</a>
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+
+<!-- SECTION POURQUOI NOUS CHOISIR -->
+<div class="container my-5">
+  <h2 class="text-center mb-4">Pourquoi nous choisir ?</h2>
+  <div class="row text-center">
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">🚗</div>
+      <div class="why-us-title">Nos tarifs</div>
+      <p>Des prix compétitifs et transparents.</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">📍</div>
+      <div class="why-us-title">Disponibilité</div>
+      <p>Un large choix de voitures disponibles.</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">⏱</div>
+      <div class="why-us-title">Proximité</div>
+      <p>Plusieurs agences proches de vous.</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">📝</div>
+      <div class="why-us-title">Flexibilité</div>
+      <p>Réservations simples et modifications faciles.</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">✅</div>
+      <div class="why-us-title">Assurance incluse</div>
+      <p>Assurances complètes pour votre sérénité.</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="why-us-icon">📞</div>
+      <div class="why-us-title">Assistance</div>
+      <p>Support client disponible 24h/24.</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

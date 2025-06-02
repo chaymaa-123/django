@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Connexion / Inscription</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("/static/images/shop now.png");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: black;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid black;
+            color: black;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #00aaff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0077cc;
+            transform: translateY(-2px);
+        }
+
+        label {
+            color: black;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .success {
+            color: lightgreen;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+
+            <!-- CONNEXION -->
+            <div id="login-container" style="{% if show_register %}display: none;{% endif %}">
+                <h2>Connexion</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ connexion_form.non_field_errors }}
+                    <label for="{{ connexion_form.username.id_for_label }}">Nom d'utilisateur</label>
+                    {{ connexion_form.username }}
+                    {{ connexion_form.username.errors }}
+
+                    <label for="{{ connexion_form.password.id_for_label }}">Mot de passe</label>
+                    {{ connexion_form.password }}
+                    {{ connexion_form.password.errors }}
+
+                    <button type="submit" name="btn_connexion">Se connecter</button>
+                    <button type="button" onclick="toggleForm()">Pas de compte ? S'inscrire</button>
+                </form>
+            </div>
+
+            <!-- INSCRIPTION -->
+            <div id="register-container" style="{% if show_register %}display: block;{% else %}display: none;{% endif %}">
+                <h2>Inscription</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                 
+
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+
+                    <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+
+                    <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+
+                    <label for="{{ form.password2.id_for_label }}">Confirmez le mot de passe</label>
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+
+                    <button type="submit" name="btn_inscription">S'inscrire</button>
+                    <button type="button" onclick="toggleForm()">Déjà un compte ? Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const login = document.getElementById("login-container");
+            const register = document.getElementById("register-container");
+            const showLogin = login.style.display !== "none";
+            login.style.display = showLogin ? "none" : "block";
+            register.style.display = showLogin ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

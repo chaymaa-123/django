@@ -1,0 +1,113 @@
+{% extends "admin/dashboard.html" %}
+{% load static %}
+{% block content %}
+<div class="ml-64 p-8 min-h-screen bg-gray-900 text-white">
+
+    <!-- En-tête -->
+    <header class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold">Produits</h1>
+            <p>Bienvenue dans votre espace administrateur</p>
+        </div>
+        <div class="flex space-x-4">
+            <a href="{% url 'gestion_produits' %}" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded flex items-center space-x-2">
+                <i class="fas fa-sync-alt"></i>
+                <span>Rafraîchir</span>
+            </a>
+            <button onclick="toggleAddModal()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded flex items-center space-x-2">
+                <i class="fas fa-plus-circle"></i>
+                <span>Ajouter Produit</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-xl shadow">
+            <h3 class="font-semibold mb-2">Total Produits</h3>
+            <p class="text-4xl font-bold">{{ voitures.count }}</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow">
+            <h3 class="font-semibold mb-2">Stock Total</h3>
+            <p class="text-4xl font-bold">{{ total_stock }}</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow">
+            <h3 class="font-semibold mb-2">Stock Faible (&lt; 5)</h3>
+            <p class="text-4xl font-bold">{{ low_stock_count }}</p>
+        </div>
+    </div>
+
+    <!-- Tableau des produits -->
+    <div class="bg-gray-800 rounded-xl shadow overflow-x-auto">
+        <table class="w-full min-w-max">
+            <thead class="bg-gray-900">
+                <tr>
+                    <th class="text-left px-6 py-3">Modèle</th>
+                    <th class="text-left px-6 py-3">Prix (Dhs)</th>
+                    <th class="text-left px-6 py-3">Type</th>
+                    <th class="text-left px-6 py-3">Gamme</th>
+                    <th class="text-left px-6 py-3">Stock</th>
+                    <th class="text-left px-6 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for voiture in voitures %}
+                <tr class="border-b border-gray-700 hover:bg-gray-700">
+                    <td class="px-6 py-3">{{ voiture.modele }}</td>
+                    <td class="px-6 py-3">{{ voiture.prix_de_reservation }}</td>
+                    <td class="px-6 py-3">{{ voiture.type_voiture }}</td>
+                    <td class="px-6 py-3">{{ voiture.gamme }}</td>
+                    <td class="px-6 py-3">{{ voiture.stock }}</td>
+                    <td class="px-6 py-3 space-x-3">
+                        <a href="?edit={{ voiture.id }}" class="text-yellow-400 hover:underline">Modifier</a> |
+                        <a href="?delete={{ voiture.id }}" onclick="return confirm('Supprimer ce produit ?')" class="text-red-500 hover:underline">Supprimer</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-6 text-gray-400">Aucun produit trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Formulaire d'ajout/modification -->
+    <div id="formulaire" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 {% if not edit_voiture %}hidden{% endif %}">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="e rounded-xl shadow-xl w-full max-w-2xl">
+            <form method="POST"  class="p-6">
+                <div class="grid grid-cols-2 gap-6">
+                {% csrf_token %}
+                {% if edit_voiture %}
+                    <input type="hidden" name="voiture_id" value="{{ edit_voiture.id }}"  class="w-full px-4 py-2 border border-black-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" >
+                {% endif %}
+                {{ form.as_p }}
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" onclick="toggleAddModal()" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700">Annuler</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Enregistrer</button>
+                </div>
+            </form>
+            <button onclick="toggleAddModal()" class="absolute top-3 right-4 text-white hover:text-gray-400 text-2xl">&times;</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    const toggleAddModal = () => {
+        const modal = document.getElementById('formulaire');
+        modal.classList.toggle('hidden');
+    };
+    
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function () {
+            setTimeout(() => {
+                form.reset(); // vide tous les champs
+            }, 100); // délai court pour laisser Django traiter
+        });
+   
+    
+</script>
+{% endblock %}
